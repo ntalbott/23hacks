@@ -1,0 +1,78 @@
+grammar Z80
+  rule program
+    line lines:line* {
+      def assemble
+        env = {}
+        line.setup(env)
+        lines.each do |line|
+          line.setup(env)
+        end
+        line.assemble(env)
+        lines.each do |line|
+          line.assemble(env)
+        end
+        env[:result]
+      end
+    }
+  end
+
+  rule line
+    nl / expression nl / expression whitespace* !(!"\n" .) / whitespace+ !(!"\n" .)
+  end
+
+  rule expression
+    declaration / directive / instruction / label / variable
+  end
+
+  rule variable
+    identifier whitespace* '=' whitespace* datum
+  end
+
+  rule identifier
+    [\w]+
+  end
+
+  rule declaration
+    '#' [a-z]+ whitespace string
+  end
+
+  rule string
+    '"' (!'"' . / '\"')* '"'
+  end
+
+  rule directive
+    '.' [a-z]+ (whitespace data)?
+  end
+
+  rule data
+    datum (whitespace* ',' whitespace* datum)*
+  end
+
+  rule datum
+    [0-9]+ / '$' [0-9a-fA-F]+ / string
+  end
+
+  rule instruction
+    label? whitespace identifier (whitespace arguments)?
+  end
+
+  rule label
+    identifier ':'
+  end
+
+  rule arguments
+    argument (whitespace* ',' whitespace* argument)*
+  end
+
+  rule argument
+    (datum / identifier) / '(' (datum / identifier) ')'
+  end
+
+  rule whitespace
+    [\t ]+
+  end
+
+  rule nl
+    whitespace* "\n"
+  end
+end

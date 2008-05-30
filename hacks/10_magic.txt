@@ -1,0 +1,3 @@
+The best source of info on Magic Models is on Rubyforge:
+
+  http://magicmodels.rubyforge.org/dr_nic_magic_models/

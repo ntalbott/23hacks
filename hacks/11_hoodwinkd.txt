@@ -1,0 +1,3 @@
+I would love it if someone started up a new hoodwink.d server:
+
+  http://code.whytheluckystiff.net/hoodwinkd/

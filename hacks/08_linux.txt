@@ -1,0 +1,6 @@
+A few interesting bits of Linux history:
+
+  http://kerneltrap.org/node/14002
+  http://en.wikipedia.org/wiki/Linux
+  
+Computer history is fun!

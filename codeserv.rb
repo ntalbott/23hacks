@@ -8,19 +8,13 @@ class CodeServ
   BOOT = %(ruby -rdrb -e'puts DRbObject.new(nil, "druby://#{IP}:2323").get("hacktastic")' > hacktastic.rb)
   
   def put(name, code)
-    file = "#{name[/\w+/]}.rb"
-    File.open("tmp/#{file}", 'w'){|f| f.write code}
-    if system("ruby -c tmp/#{file}")
-      system "mv tmp/#{file} incoming/#{file}"
-      "Accepted."
-    else
-      system "rm tmp/#{file}"
-      "Rejected."
-    end
+    file = name[/\w+(\.\w+)?/]
+    File.open("incoming/#{file}", 'w'){|f| f.write code}
+    "Thanks!"
   end
 
   def get(name)
-    hack = "hacks/#{name[/\w+/]}.rb"
+    hack = "hacks/#{name[/\w+(\.\w+)?/]}"
     if File.exist?(hack)
       File.read(hack)
     else
@@ -29,8 +23,8 @@ class CodeServ
   end
   
   def list
-    Dir['hacks/*.rb'].collect do |e|
-      "#{File.basename(e, '.rb').ljust(15)}#{File.readlines(e).first.chomp}"
+    Dir['hacks/*'].sort.collect do |e|
+      "#{e.ljust(14)} #{File.readlines(e).first.chomp}"
     end.sort.join("\n")
   end
 end

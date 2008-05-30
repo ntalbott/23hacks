@@ -1,0 +1,3 @@
+Grab it here and get started:
+
+  http://github.com/evanphx/rubinius/tree/master

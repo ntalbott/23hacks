@@ -1,0 +1,8 @@
+# Want the source of this talk?
+
+gitjour clone 23hacks
+
+# Want my incomplete, half-baked Z80 assembler?
+
+gitjour clone z80
+

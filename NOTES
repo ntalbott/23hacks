@@ -1,51 +1,93 @@
-A different kind of talk - not about more productivity, but about less.
-Not going to teach you to be more productively unproductive, but rather to just enjoy non-productivity.
+When I was thinking about what I wanted to talk on at RailsConf this year, I knew one thing: I didn't want to talk about Rails. If I had to lay down one complaint about RailsConf last year, it would be that there were a lot of talks about getting a bit more efficient, and almost none about having more fun - at least, I couldn't find the "have more fun" talks. And, honestly, I contributed to that, with two business-centric talks.
+
+Now, business is all well and good, but last year I realized that when I come to a conference the number one thing I want is to have my horizons expanded. Honing existing skills that I have, such as catching up with the latest on REST or how to serve up pages faster, is totally legitimate, and I don't think you could have a RailsConf without that. But what I'm also interested in is things that yank me out of my rut and give me a peek at completely new vistas.
+
+And we had some of that last year - Avi Bryant talking about Smalltalk virtual machines and Ze Frank talking about what Ze Frank talks about, so my goal for myself for this year was to bring that same perspective to a regular talk. And so, welcome to 23 hacks, my attempt to do just that! We're going to talk about creative hacking: writing code for yourself, because you can, because it's fun. I have three goals: first, I want to delight you with some cool hacks and hopefully get your creative juices flowing. Second, I want to motivate you to do creative hacking. And finally, I want to empower you to enjoy creative hacking.
+
+So lets kick things off with a hack. I call this one "beautiful code", and it's completely inspired by Christian Neukirchen's ruby-talk Christmas cards. It's actually right here: it's my title screen for this talk. It's also a hack of the talk, but that will become clear in a moment:
 
 1. Beautiful Code
   23-10 Hacks
-  The problem with a talk about procrastination...
-  http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/124441
+  http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/124391
+  
+So yes, 13 hacks. Now, there are two reasons for this: first, I realized with 23 hacks I'd have a max of 2 minutes per hack to talk about them, and that didn't seem sufficient. The second reason is that finding clever hacks is challenging (some of the best ones never make it out in to the wild) and I was finding it a lot easier to fill out 13 than I was filling out 23.
+
+But lets talk a little bit about what I mean by a hack. I'm using hack in the sense of "fun code that you write for your own benefit." Nathaniel's rules of the hack are thus: first, it has to be your decision to write it. Second, you must enjoy the process. That's it!
+
+Notice what's not there. A hack doesn't have to have value. It doesn't have to make you more efficient. It doesn't have to relate to your job. It doesn't have to be clean. You don't have to finish it. Here's a great example: RubyOok. I found this little hack right after the first RubyConf in 2001, when I was perusing blogs of fellow Rubyists, which were quite rare back then. This guy Chad Fowler - maybe you've heard of him? - was talking about this Ook interpreter he'd written. I love this from his description:
+
+  Those who know me, understand that I start about 5 or 6 times more projects
+  than I ever finish. I've grown to live with this and to try to use it as an
+  advantage (though I'm not fully sure that's possible yet). A disturbing
+  pattern I have begun to recognize on top of this observation is that the
+  scant few projects which I do complete tend to weigh in somewhere between
+  0 and 0.00001 on the useful scale.
+  
+So lets look at RubyOok:
   
 2. RubyOok
-  What is hacking?
   http://web.archive.org/web/20011127073200/http://www.chadfowler.com/
   http://www.chadfowler.com/2003/3/25/valueless-software
-  
-Four sections to this talk: procrastination, yak-shaving, laziness and NGTD.
 
-Procrastination
+So the question becomes, why hack? Why spend time working on useless things? Well, when I mentioned to Chad that I was going to use RubyOok in my talk, he pointed me to another article he wrote more recently, entitled "Valueless Software". One of the things he says in there is that musicians will spend a lot of time playing music that no one would want to hear, because it allows them to learn and grow in ways that producing something of "value" never would. If we spend all of our time focusing on doing "useful" things, I think we can stunt a part of our creativity and lose major growth opportunities.
 
-   (Beautiful Code)
+There's another reason I think we need to hack: to keep from getting burnt out. I've met and heard about multiple former coders who have taken up different professions not just because they wanted to try something new, but more because they were sick of coding. I think I've largely avoided this by keeping my work aligned with my passions (i.e. Ruby), but even so I can find myself getting sick of doing the same thing day in and day out. Spending some time hacking on something completely unrelated can be just what the doctor ordered to keep me enthused with development.
+
+Towards that end, as I was working on this talk, I used it as an excuse to hack around with something I haven't touched in a while: DRb. And thus I present codeserv, by which you can grab all of the code samples I'm showing today. Let me fire it up:
 
 3. DRb Code Server
+   list, get, put
+   
+So here's my next question: what hacks do you have sitting around on your hard drive that you could share with all of us? Please feel free as I keep running my mouth to grab them and put them up. I'll have a look through them in a bit and I might ask you to come up and give us a quick description.
 
-4. TI-85 Hack
+But now lets move on to the titular hack for this title: ye olde Z80 assembler. When I was thinking about hacking that I do, I have one longstanding hack that meets both of my hack rules: since at least 1999, I have puttered around with writing a Z80 assembler. Now the logical question is: why in the world would I do that? Well, one of my formative programming experiences was writing assembler for my TI-85 graphing calculator. The cool thing about writing an assembler is that it's a greatly simplified parsing problem and the transformations to actual code are really straightforward.
 
-5. Haskell Moola cracker
+So the latest incarnation of my z80 assembler uses Treetop. How many of you have heard of Treetop? It's this really amazing parser generator that I'm only just starting to grok, and I'm totally embarrassed to show you my grammar file, but I'm writing it for myself and I'm enjoying the process.
 
-Back off and enjoy coding.
-Don't get burned out.
+4. Z80 Assembler
 
-Yak-shaving
+The other hack I want to talk about, for which I don't have any specific code to show, is the hack that actually allowed me to write assembler for my TI-85 in the first place. You see, Texas Instruments didn't design the TI-85 to allow the end user to code assembly. It had BASIC language support, but that was limited and slow. So in a beautiful example of what I call a "procrastination hack", some students that probably should've been doing their homework dug through the TI-85 backup files and found out that the CUSTOM menu jumps to a pre-defined assembly location. Thus, by tweaking the backup file, they could point those CUSTOM menu locations at assembly code of their choosing, and the rest was easy.
 
-6. Linux/git
+5. TI-85 Hack
 
-7. Z80 Assembler
+Another example of hardware hacking I can show a bit of code for is this very cool HP printer hack I haven't been able to try out but really would love to. Basically it allows you to change the message displayed on an HP printer's LCD console. In the original hack (written in C#) the guy had it set up to rotate messages on a regular basis, and my favorite quote from the article is: "It never raised many eyebrows that I know of while I was there, but afterwards someone told me they knew one lady who stopped at the printer every day 'because it says such nice things to me'." That is just cool.
 
-Why your boss should like it when you hack.
+6. HP Printer LCD
 
-8. Erlang jabber server
+One of the tricky things about doing a talk about hacks it that a lot of really interesting hacks never make it off of their creator's hard drives. I mean, if you create something for yourself, there's a good chance that either you won't consider it interesting to others and/or you won't take the time to polish it up for general release. So I'm going to regale you once again with one of my hacks: a Haskell Moola cracker. Because of course hacks don't have to be in Ruby, and it's great to spend hacking time learning a new language.
 
-Laziness
+So what is a Moola cracker? Well, moola.com is this site that offers simple little games of chance that you play against other people. You start out with a penny, and you play another person with the same amount of dough, and whoever wins takes everything (doubling their pot). And so on. The money is "free" (advertising supported), and it's fun to dink around with. What I really got interested in, though, was "hacking" it by using the inherent non-randomness of the games of chance (think card-counting) to try to game the system. So I coded up a little program, originally in Ruby, to spit out probabilities for future moves of the Gold Rush game. I haven't played with it in a while, and my Haskell is probably atrocious, but here it is:
 
-9. My svn->git script
+7. Haskell Moola cracker
 
-10. Distributed backup system
+So how important is it to hack? I think it's *really* important, and I think it's good not just for you as an individual, but also for the world at large. Case in point is one of my favorite examples of that staple of hacking: yak-shaving. Yak-shaving is that process whereby you set out to write a simple little piece of code, and through a comedy of errant misdirection, you end up writing a new OS. And that's the next hack I want to highlight: Linux. The world's first encounter with Linux is Linus telling us that, "I'm doing a (free) operating system (just a hobby, won't be big and professional like gnu) for 386(486) AT clones."
 
-11. spacesuit/ufo
+And don't forget git! Surely you can't write an OS without having your own version control system, can you? And yet how much have we come to know, love and respect these projects, and how much have they enhanced our lives! I think the message is that there are times to avoid yak-shaving, and there are times to embrace it!
 
-NGTD (because I *can*)
+8. Linux/git
 
-12. hoodwink.d
+Ruby certainly has its own share of hacks that could change the world going on, and in particular I'd like to highlight one that's really well known and point out why it's such a great hack. To me truly great hacks inspire more hacking, and Rubinius is in that category. Why was Rubinius started? Because it's too hard for most people to hack on the Ruby interpreter, and Evan wanted to change that. And Rubinius' culture actually bears out its love for hacking: it encourages casual contributors to just drop in and add tests and functionality. On top of that, the project grants commit rights as soon as you have one patch accepted, which really lowers the barrier to resistance.
 
-13. HP Printer LCD
+One thing to note is that if you have an itch to get hacking and don't have a good idea of what to hack on, you can fulfill the hacking rules by hacking on someone else's project. Just make sure you want to hack on it, and you enjoy hacking on it, and get to it. And for those not sure to get going with this whole hacking thing, Rubinius would be a great place to start!
+
+9. Rubinius
+
+Of course, you can do your hacking within the Rails ecosystem... one of my favorite examples of this is Dr. Nic. He's always kicking out wild little Rails projects that solve no one's problems but are really interesting to behold. Magic models is one of my favorite examples, as it's not something I think one would want to use in a real system (though maybe I'm wrong?), but I'm sure Nic understands Rails loading 10x better than I do after writing it. I'm guessing he created it because it was fun and because he wanted to learn, not because someone told him he should. And it rocks!
+
+9. Magic models
+
+A talk on hacking would be incomplete without at least one _why thingy. I'd call it a project, but that's way to formal for anything _why does. I'm a big fan of Ruby's mad genius, and even though I didn't use it very much, I always loved the concept of hoodwink.d. Hoodwink.d was a subversive overlay over the web, allowing you to comment (in hoodwink.d land) on any page on the web. It required editing your hosts file, and either using a web proxy or using Greasemonkey to overlay the hoodwink.d. You can still get at the source, but the server is currently offline. Definitely worth a look-see.
+
+11. hoodwink.d
+
+Conference hacking is a special genre of hacking, and I have vivid recollections of coming back to the conference hotel at the 2003 RubyConf and finding Rich Kilmer, Chad Fowler, Paul Brannan, David Alan Black, Jim Weirich, and others that I'm forgetting in the hotel bar working furiously on a project. They continued to hack on that project over the course of the conference, did an announcement and demo of it, and released it to the world shortly thereafter. And it was amazing. And every one of you has ended up using it. And it was created for the fun of it. Anyone have a guess as to what project it was?
+
+12. Rubygems
+
+So my goals were to delight you with some hacks that I find inspiring, to motivate you to do your own hacking, and to empower you to enjoy hacking. There's only one good measure of whether I've succeeded: are *you* going to leave this room and hack more code. Are *you* going to enjoy it more, knowing that it's something good for you, and potentially good for the world at large? If so, then I couldn't be any happier with the results of our time today.
+
+And we have one more hack. This one is a conference hack that is being done at *this* conference. It's called gitjour, and it's a sweet way to share git repositories over the LAN using Bonjour. Yesterday I walked in to the code drive room, and Chad immediately said, "You gotta check this out!" and I did and I was hooked. I've already contributed code, and you can, too. Just gem install gitjour, and do a gitjour list to see what's available.
+
+13. gitjour
+
+And with that, I thank you for your time, and ask one simple thing of you: please hack more. That is all.

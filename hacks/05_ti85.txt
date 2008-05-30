@@ -1,0 +1,1 @@
+I don't have code to show for this, but you can read a lot more about it over at http://en.wikipedia.org/wiki/TI-85 and http://ticalc.org. Have an old TI-8x calculator and interested in hacking on it? Feel free to drop me a line and we can chat about it!
