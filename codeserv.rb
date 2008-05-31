@@ -5,7 +5,7 @@ require 'drb'
 IP = ARGV.first
 
 class CodeServ
-  BOOT = %(ruby -rdrb -e'puts DRbObject.new(nil, "druby://#{IP}:2323").get("hacktastic")' > hacktastic.rb)
+  BOOT = %(ruby -rdrb -e'puts DRbObject.new(nil, "druby://#{IP}:2323").get("03_hacktastic.rb")' > hacktastic.rb)
   
   def put(name, code)
     file = name[/\w+(\.\w+)?/]
@@ -24,11 +24,12 @@ class CodeServ
   
   def list
     Dir['hacks/*'].sort.collect do |e|
-      "#{e.ljust(14)} #{File.readlines(e).first.chomp}"
+      "#{File.basename(e).ljust(18)}  #{File.readlines(e).first.chomp[0..50]}"
     end.sort.join("\n")
   end
 end
 
 DRb.start_service("druby://#{IP}:2323", CodeServ.new)
+puts
 puts CodeServ::BOOT
 DRb.thread.join
