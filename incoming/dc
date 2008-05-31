@@ -1,0 +1,45 @@
+#!/usr/bin/env ruby
+# devin.chalmers@gmail.com
+# love the talk!
+%w{rubygems camping}.each {|lib| require lib}
+
+Camping.goes :Pooping
+
+module Pooping
+  File.open('poo') { |f| Poops = Marshal.load(f) }
+  Poops ||= Array.new(24, 0)
+end
+
+module Pooping::Controllers
+  class Graph < R '/'
+    def get
+      render :graph
+    end
+    def post
+      Poops[Time.now.hour - 1] += 1
+      File.open('poo', 'w') {|f| Marshal.dump(Poops, f)}
+      redirect R(Graph)
+    end
+  end
+end
+
+module Pooping::Views
+  def layout
+    html do
+      head { title 'Pooping!' }
+      body { self << yield }
+    end
+  end
+  def graph
+    h1 "Camping.goes :Pooping more quickly"
+    form(:method => 'post') do
+      span "It is currently #{Time.now.hour} o'clock. Did you poo?"
+      input :type => 'submit', :value => 'I pooed'
+    end
+    pre do
+      Pooping::Poops.each_with_index do |p, h|
+        self << "#{(h+1).to_s.rjust(2,' ')} : #{'|' * p} \n"
+      end
+    end
+  end
+end

@@ -1,0 +1,129 @@
+grammar Expectation
+
+  rule specifications
+    specification+
+  end
+
+  rule specification
+    context newlines setup:(setup newlines)? expectations newlines {
+      def to_test_unit
+        <<EOF
+require 'test/unit'
+    
+class #{context.to_class_name} < Test::Unit::TestCase
+
+#{setup.setup.to_method unless setup.text_value.blank?}
+
+#{expectations.to_test}
+
+end
+
+EOF
+      end
+    }
+  end
+
+  rule context
+    'Context' space identifier:context_identifier {
+      def to_class_name
+        identifier.to_class_name
+      end
+    }
+  end
+
+  rule context_identifier
+    word space context_identifier {
+      def to_class_name
+        word.text_value.capitalize + context_identifier.to_class_name
+      end
+    }
+    /
+    word {
+      def to_class_name
+        text_value.capitalize
+      end
+    }
+  end
+
+  rule expectations
+    expectation_line newlines expectations {
+      def to_test
+        expectation_line.to_test + "\n" + expectations.to_test
+      end
+    }
+    /
+    expectation_line {
+      def to_test
+        to_s
+      end
+    }
+  end
+
+  rule expectation_line
+    indent expectation {
+      def to_s
+        ("def test_#{expectation.text_value.to_method_name}\n" + expectation.to_code.code_indent + "\nend\n").code_indent
+      end
+      alias to_test to_s
+    }
+  end
+
+  rule expectation
+    'Expect' space code {
+      def to_code
+        "assert " + code.text_value
+      end
+    }
+  end
+
+  rule setup
+    setup_line newlines setup {
+      def to_method
+        ("def setup\n" + setup_line.text_value + "\n" + setup.to_method + "\nend\n").code_indent
+      end
+    }
+    /
+    setup_line {
+      def to_method
+        text_value
+      end
+    }
+  end
+  
+  rule setup_line
+    indent code
+  end
+
+  rule code
+    !keywords nonspace space code / !keywords nonspace
+  end
+
+  rule indent
+    '  '
+  end
+
+  rule newlines
+    newline newlines / newline
+  end
+
+  rule newline
+    "\n"
+  end
+
+  rule nonspace
+    [\S]+ 
+  end
+  
+  rule space
+    [ ]+
+  end
+
+  rule word
+    [\w]+
+  end
+
+  rule keywords
+    'Expect'
+  end
+    
+end
